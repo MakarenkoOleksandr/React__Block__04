@@ -1,23 +1,21 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState, useEffect } from "react";
+import InputAmount from "./InputAmount";
+import Convert from "./Convert";
+import getRate from "./getRate";
 
 function App() {
+  const [rate, setRate] = useState(null);
+
+  useEffect(() => {
+    getRate().then((data) => setRate(data));
+  }, []);
+
+  const [amount, setAmount] = useState(0);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Convert amount={amount} rate={rate} />
+      <InputAmount onChange={setAmount} />
     </div>
   );
 }
